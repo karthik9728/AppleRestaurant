@@ -7,6 +7,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frontend", "Frontend", "{AD
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apple.Web", "Apple.Web\Apple.Web.csproj", "{9A11A6BA-D005-4933-A280-D09BDFB8D011}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{20598E9C-4960-4288-8DBD-390D6F98F4B5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apple.Services.ProductAPI", "Apple.Services.ProductAPI\Apple.Services.ProductAPI.csproj", "{7E211724-1E54-4529-AC03-35DFAD7B6DFF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,12 +21,17 @@ Global
 		{9A11A6BA-D005-4933-A280-D09BDFB8D011}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A11A6BA-D005-4933-A280-D09BDFB8D011}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9A11A6BA-D005-4933-A280-D09BDFB8D011}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E211724-1E54-4529-AC03-35DFAD7B6DFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E211724-1E54-4529-AC03-35DFAD7B6DFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E211724-1E54-4529-AC03-35DFAD7B6DFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E211724-1E54-4529-AC03-35DFAD7B6DFF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{9A11A6BA-D005-4933-A280-D09BDFB8D011} = {AD31BB5A-AD7B-4EC8-B102-75B686B81D3D}
+		{7E211724-1E54-4529-AC03-35DFAD7B6DFF} = {20598E9C-4960-4288-8DBD-390D6F98F4B5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CC5DAAA4-CF4D-483B-A3F8-74053A995E5B}
