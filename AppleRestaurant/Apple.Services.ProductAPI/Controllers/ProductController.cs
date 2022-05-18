@@ -76,7 +76,7 @@ namespace Apple.Services.ProductAPI.Controllers
 
 
         [HttpPost]
-        public async Task<object> CreateProduct([FromBody] ProductDto productDto)
+        public async Task<object> Post([FromBody] ProductDto productDto)
         {
             try
             {
@@ -94,7 +94,7 @@ namespace Apple.Services.ProductAPI.Controllers
         }
 
         [HttpPut]
-        public async Task<object> UpdateProduct([FromBody] ProductDto productDto)
+        public async Task<object> Put([FromBody] ProductDto productDto)
         {
             try
             {
@@ -112,7 +112,7 @@ namespace Apple.Services.ProductAPI.Controllers
         }
 
         [HttpDelete]
-        public async Task<object> DeleteProduct(int id)
+        public async Task<object> Delete(int id)
         {
             try
             {
