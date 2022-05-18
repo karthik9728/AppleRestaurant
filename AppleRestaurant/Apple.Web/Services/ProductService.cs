@@ -18,7 +18,7 @@ namespace Apple.Web.Services
             {
                 ApiType = SD.ApiType.POST,
                 Data = productDto,
-                Url = SD.ProductAPIBase + "api/products",
+                Url = SD.ProductAPIBase + "api/Product",
                 AccessToken = ""
             });
         }
@@ -28,7 +28,7 @@ namespace Apple.Web.Services
             return await this.SendAsync<T>(new ApiRequest()
             {
                 ApiType = SD.ApiType.DELETE,               
-                Url = SD.ProductAPIBase + "api/products" + id,
+                Url = SD.ProductAPIBase + "api/Product" + id,
                 AccessToken = ""
             });
         }
@@ -38,7 +38,7 @@ namespace Apple.Web.Services
             return await this.SendAsync<T>(new ApiRequest()
             {
                 ApiType = SD.ApiType.GET,
-                Url = SD.ProductAPIBase + "api/products",
+                Url = SD.ProductAPIBase + "api/Product",
                 AccessToken = ""
             });
         }
@@ -48,7 +48,7 @@ namespace Apple.Web.Services
             return await this.SendAsync<T>(new ApiRequest()
             {
                 ApiType = SD.ApiType.GET,
-                Url = SD.ProductAPIBase + "api/products" + id,
+                Url = SD.ProductAPIBase + "api/Product" + id,
                 AccessToken = ""
             });
         }
@@ -58,7 +58,7 @@ namespace Apple.Web.Services
             return await this.SendAsync<T>(new ApiRequest()
             {
                 ApiType = SD.ApiType.GET,
-                Url = SD.ProductAPIBase + "api/products" + name,
+                Url = SD.ProductAPIBase + "api/Product" + name,
                 AccessToken = ""
             });
         }
@@ -69,7 +69,7 @@ namespace Apple.Web.Services
             {
                 ApiType = SD.ApiType.PUT,
                 Data = productDto,
-                Url = SD.ProductAPIBase + "api/products",
+                Url = SD.ProductAPIBase + "api/Product",
                 AccessToken = ""
             });
         }
