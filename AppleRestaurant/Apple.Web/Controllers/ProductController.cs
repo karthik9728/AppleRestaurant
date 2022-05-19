@@ -19,7 +19,7 @@ namespace Apple.Web.Controllers
         {
             List<ProductDto> list = new List<ProductDto>();
             var response = await _productService.GetAllProductAsync<ResponseDto>();
-            if (response == null && response.IsSuccess)
+            if (response != null && response.IsSuccess)
             {
                 list = JsonConvert.DeserializeObject<List<ProductDto>>(Convert.ToString(response.Result));
                 //list = JsonConvert.DeserializeObject<List<ProductDto>>(response.Result.ToString());
