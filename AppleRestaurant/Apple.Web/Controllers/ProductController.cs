@@ -22,9 +22,32 @@ namespace Apple.Web.Controllers
             if (response != null && response.IsSuccess)
             {
                 list = JsonConvert.DeserializeObject<List<ProductDto>>(Convert.ToString(response.Result));
-                //list = JsonConvert.DeserializeObject<List<ProductDto>>(response.Result.ToString());
             }
             return View(list);
+        }
+
+        //View
+        public async Task<IActionResult> ProductCreate()
+        {
+            
+            return View();
+        }
+
+
+        //Post
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ProductCreate(ProductDto productDto)
+        {
+            if (ModelState.IsValid)
+            {
+                var response = await _productService.CreateProductAsync<ResponseDto>(productDto);
+                if (response != null && response.IsSuccess)
+                {
+                    return RedirectToAction(nameof(ProductIndex));
+                }
+            }
+            return View(productDto);
         }
     }
 }
