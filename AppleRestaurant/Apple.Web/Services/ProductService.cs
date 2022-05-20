@@ -28,7 +28,7 @@ namespace Apple.Web.Services
             return await this.SendAsync<T>(new ApiRequest()
             {
                 ApiType = SD.ApiType.DELETE,               
-                Url = SD.ProductAPIBase + "api/Product" + id,
+                Url = SD.ProductAPIBase + "api/Product/" + id,
                 AccessToken = ""
             });
         }
@@ -48,7 +48,7 @@ namespace Apple.Web.Services
             return await this.SendAsync<T>(new ApiRequest()
             {
                 ApiType = SD.ApiType.GET,
-                Url = SD.ProductAPIBase + "api/Product" + id,
+                Url = SD.ProductAPIBase + "api/Product/" + id,
                 AccessToken = ""
             });
         }
@@ -58,7 +58,7 @@ namespace Apple.Web.Services
             return await this.SendAsync<T>(new ApiRequest()
             {
                 ApiType = SD.ApiType.GET,
-                Url = SD.ProductAPIBase + "api/Product" + name,
+                Url = SD.ProductAPIBase + "api/Product/" + name,
                 AccessToken = ""
             });
         }

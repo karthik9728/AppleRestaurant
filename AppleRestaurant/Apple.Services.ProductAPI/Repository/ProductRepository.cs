@@ -23,11 +23,11 @@ namespace Apple.Services.ProductAPI.Repository
             Product product = _mapper.Map<Product>(productDto);
             if (product.ProductId > 0)
             {
-                _db.Products.Add(product);
+                _db.Products.Update(product);
             }
             else
             {
-                _db.Products.Update(product);
+                _db.Products.Add(product);
             }
 
             await _db.SaveChangesAsync();
