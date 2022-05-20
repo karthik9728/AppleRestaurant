@@ -111,7 +111,7 @@ namespace Apple.Services.ProductAPI.Controllers
             return _response; 
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<object> Delete(int id)
         {
             try
