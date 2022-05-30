@@ -17,6 +17,7 @@ builder.Services.AddHttpClient<IProductService,ProductService>();
 #region SD Url
 
 var connectionString = builder.Configuration["ServiceUrl:ProductAPI"];
+var connectionStringIdentity = builder.Configuration["ServiceUrl:IdentityAPI"];
 
 SD.ProductAPIBase = connectionString;
 
@@ -28,6 +29,27 @@ builder.Services.AddScoped<IProductService,ProductService>();
 
 #endregion
 
+#region 
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultScheme="Cookies";
+    options.DefaultChallengeScheme = "oidc";
+}).AddCookie("Cookies",c=>c.ExpireTimeSpan=TimeSpan.FromMinutes(10))
+.AddOpenIdConnect("oidc", options =>
+{
+    options.Authority = connectionStringIdentity;
+    options.GetClaimsFromUserInfoEndpoint = true;
+    options.ClientId = "apple";
+    options.ClientSecret = "secret";
+    options.ResponseType = "code";
+    options.TokenValidationParameters.NameClaimType = "name";
+    options.TokenValidationParameters.RoleClaimType = "role";
+    options.Scope.Add("apple");
+    options.SaveTokens = true;
+});
+
+#endregion
 
 //builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 
@@ -45,6 +67,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

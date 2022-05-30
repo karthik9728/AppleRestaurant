@@ -1,6 +1,7 @@
 ﻿using Apple.Services.ProductAPI.DTO.Product;
 using Apple.Services.ProductAPI.DTO.Response;
 using Apple.Services.ProductAPI.Repository.IRepository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,7 +20,9 @@ namespace Apple.Services.ProductAPI.Controllers
             this._response = new ResponseDto();
         }
 
+       
         [HttpGet]
+        [Authorize]
         public async Task<object> Get()
         {
             try
@@ -38,6 +41,7 @@ namespace Apple.Services.ProductAPI.Controllers
         }
 
         [HttpGet("{id:int}")]
+        [Authorize]
         public async Task<object> Get(int id)
         {
             try
@@ -56,6 +60,7 @@ namespace Apple.Services.ProductAPI.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         [Route("{name}")]
         public async Task<object> Get(string name)
         {
@@ -76,6 +81,7 @@ namespace Apple.Services.ProductAPI.Controllers
 
 
         [HttpPost]
+        [Authorize]
         public async Task<object> Post([FromBody] ProductDto productDto)
         {
             try
@@ -94,6 +100,7 @@ namespace Apple.Services.ProductAPI.Controllers
         }
 
         [HttpPut]
+        [Authorize]
         public async Task<object> Put([FromBody] ProductDto productDto)
         {
             try
@@ -111,6 +118,7 @@ namespace Apple.Services.ProductAPI.Controllers
             return _response; 
         }
 
+        [Authorize(Roles =("Admin"))]
         [HttpDelete("{id}")]
         public async Task<object> Delete(int id)
         {

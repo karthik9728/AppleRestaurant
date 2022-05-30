@@ -2,6 +2,8 @@ using Apple.Services.Identity;
 using Apple.Services.Identity.DbContexts;
 using Apple.Services.Identity.Initializer;
 using Apple.Services.Identity.Models;
+using Apple.Services.Identity.Services;
+using Duende.IdentityServer.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -39,7 +41,7 @@ identityBuilder.AddDeveloperSigningCredential();
 #region
 
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
-
+builder.Services.AddScoped<IProfileService, ProfileService>();
 #endregion
 
 
