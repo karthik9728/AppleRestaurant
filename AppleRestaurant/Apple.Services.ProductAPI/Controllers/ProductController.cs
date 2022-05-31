@@ -22,7 +22,7 @@ namespace Apple.Services.ProductAPI.Controllers
 
        
         [HttpGet]
-        [Authorize]
+        //[Authorize]
         public async Task<object> Get()
         {
             try
@@ -41,7 +41,7 @@ namespace Apple.Services.ProductAPI.Controllers
         }
 
         [HttpGet("{id:int}")]
-        [Authorize]
+        //[Authorize]
         public async Task<object> Get(int id)
         {
             try
