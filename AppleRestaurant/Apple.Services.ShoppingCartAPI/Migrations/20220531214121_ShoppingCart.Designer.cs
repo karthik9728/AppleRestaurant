@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Apple.Services.ShoppingCartAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220531102901_AddProductAndCardModels")]
-    partial class AddProductAndCardModels
+    [Migration("20220531214121_ShoppingCart")]
+    partial class ShoppingCart
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

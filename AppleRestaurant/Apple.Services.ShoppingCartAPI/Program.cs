@@ -1,5 +1,7 @@
 using Apple.Services.ShoppingCartAPI.Data;
 using Apple.Services.ShoppingCartAPI.Mapping;
+using Apple.Services.ShoppingCartAPI.Repository;
+using Apple.Services.ShoppingCartAPI.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -30,7 +32,7 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 #region Repository Services
 
-//builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<ICartRepository,CartRepository>();
 
 #endregion
 

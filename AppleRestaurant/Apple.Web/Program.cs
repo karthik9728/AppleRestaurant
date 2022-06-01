@@ -1,6 +1,7 @@
 using Apple.Web;
 using Apple.Web.Services;
 using Apple.Web.Services.IServices;
+using Microsoft.AspNetCore.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,7 @@ builder.Services.AddControllersWithViews();
 
 //Add Service for Product Service
 builder.Services.AddHttpClient<IProductService,ProductService>();
+builder.Services.AddHttpClient<ICartService,CartService>();
 
 #endregion
 
@@ -18,14 +20,17 @@ builder.Services.AddHttpClient<IProductService,ProductService>();
 
 var connectionString = builder.Configuration["ServiceUrl:ProductAPI"];
 var connectionStringIdentity = builder.Configuration["ServiceUrl:IdentityAPI"];
+var connectionStringShoppingCart = builder.Configuration["ServiceUrl:ShoppingCartAPI"];
 
 SD.ProductAPIBase = connectionString;
+SD.ShoppingCartAPIBase = connectionStringShoppingCart;
 
 #endregion
 
 #region DI Service
 
 builder.Services.AddScoped<IProductService,ProductService>();
+builder.Services.AddScoped<ICartService,CartService>();
 
 #endregion
 
@@ -43,6 +48,8 @@ builder.Services.AddAuthentication(options =>
     options.ClientId = "apple";
     options.ClientSecret = "secret";
     options.ResponseType = "code";
+    options.ClaimActions.MapJsonKey("role","role","role");
+    options.ClaimActions.MapJsonKey("sub","sub","sub");
     options.TokenValidationParameters.NameClaimType = "name";
     options.TokenValidationParameters.RoleClaimType = "role";
     options.Scope.Add("apple");

@@ -1,5 +1,4 @@
-﻿
-namespace Apple.Services.ShoppingCartAPI.DTO
+﻿namespace Apple.Web.DTO.AppleServicesShoppingCartAPI
 {
     public class CartDto
     {

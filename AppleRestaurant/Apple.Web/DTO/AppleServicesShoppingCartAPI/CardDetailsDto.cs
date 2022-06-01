@@ -1,6 +1,6 @@
-﻿using Apple.Services.ShoppingCartAPI.DTO.Products;
+﻿using Apple.Web.DTO.AppleServicesProductAPI.Product;
 
-namespace Apple.Services.ShoppingCartAPI.DTO
+namespace Apple.Web.DTO.AppleServicesShoppingCartAPI
 {
     public class CardDetailsDto
     {

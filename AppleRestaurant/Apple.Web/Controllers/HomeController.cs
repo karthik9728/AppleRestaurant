@@ -1,5 +1,7 @@
-﻿using Apple.Web.DTO.AppleServicesProductAPI.Product;
-using Apple.Web.DTO.AppleServicesProductAPI.Response;
+﻿using Apple.Services.ShoppingCartAPI.DTO.Response;
+using Apple.Web.DTO.AppleServicesProductAPI.Product;
+//using Apple.Web.DTO.AppleServicesProductAPI.Response;
+using Apple.Web.DTO.AppleServicesShoppingCartAPI;
 using Apple.Web.Models;
 using Apple.Web.Services.IServices;
 using Microsoft.AspNetCore.Authentication;
@@ -14,34 +16,74 @@ namespace Apple.Web.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IProductService _productService;
+        private readonly ICartService _cartService;
 
-        public HomeController(ILogger<HomeController> logger, IProductService productService)
+        public HomeController(ILogger<HomeController> logger, IProductService productService, ICartService cartService)
         {
             _logger = logger;
             _productService = productService;
+            _cartService = cartService;
         }
 
         public async Task<IActionResult> Index()
         {
-            List<ProductDto> products = new List<ProductDto>();
-            var responce = await _productService.GetAllProductAsync<ResponseDto>("");
-            if(responce != null && responce.IsSuccess)
+            List<ProductDto> list = new();
+            var response = await _productService.GetAllProductAsync<ResponseDto>("");
+            if (response != null && response.IsSuccess)
             {
-                products = JsonConvert.DeserializeObject<List<ProductDto>>(Convert.ToString(responce.Result));
+                list = JsonConvert.DeserializeObject<List<ProductDto>>(Convert.ToString(response.Result));
             }
-            return View(products);
+            return View(list);
         }
 
         [Authorize]
         public async Task<IActionResult> Details(int productId)
         {
-            ProductDto product = new ProductDto();
-            var responce = await _productService.GetProductByIdAsync<ResponseDto>(productId,"");
-            if (responce != null && responce.IsSuccess)
+            ProductDto model = new();
+            var response = await _productService.GetProductByIdAsync<ResponseDto>(productId, "");
+            if (response != null && response.IsSuccess)
             {
-                product = JsonConvert.DeserializeObject<ProductDto>(Convert.ToString(responce.Result));
+                model = JsonConvert.DeserializeObject<ProductDto>(Convert.ToString(response.Result));
             }
-            return View(product);
+            return View(model);
+        }
+
+        [HttpPost]
+        [ActionName("Details")]
+        [Authorize]
+        public async Task<IActionResult> DetailsPost(ProductDto productDto)
+        {
+            CartDto cartDto = new()
+            {
+                CardHeader = new CardHeaderDto
+                {
+                    userId = User.Claims.Where(u => u.Type == "sub")?.FirstOrDefault()?.Value
+                }
+            };
+
+            CardDetailsDto cartDetails = new CardDetailsDto()
+            {
+                Count = productDto.Count,
+                ProductId = productDto.ProductId
+            };
+
+            var resp = await _productService.GetProductByIdAsync<ResponseDto>(productDto.ProductId, "");
+            if (resp != null && resp.IsSuccess)
+            {
+                cartDetails.Product = JsonConvert.DeserializeObject<ProductDto>(Convert.ToString(resp.Result));
+            }
+            List<CardDetailsDto> cartDetailsDtos = new();
+            cartDetailsDtos.Add(cartDetails);
+            cartDto.CardDetails = cartDetailsDtos;
+
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var addToCartResp = await _cartService.AddToCartAsync<ResponseDto>(cartDto, accessToken);
+            if (addToCartResp != null && addToCartResp.IsSuccess)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(productDto);
         }
 
         public IActionResult Privacy()
@@ -58,12 +100,14 @@ namespace Apple.Web.Controllers
         [Authorize]
         public async Task<IActionResult> Login()
         {
+
             return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Logout()
         {
-            return SignOut("Cookies","oidc");
+            return SignOut("Cookies", "oidc");
         }
+
     }
 }

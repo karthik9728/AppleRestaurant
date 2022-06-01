@@ -4,7 +4,7 @@
 
 namespace Apple.Services.ShoppingCartAPI.Migrations
 {
-    public partial class AddProductAndCardModels : Migration
+    public partial class ShoppingCart : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

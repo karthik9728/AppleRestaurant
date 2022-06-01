@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
@@ -12,6 +12,10 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.5" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.18.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Apple.Services.ShoppingCartAPI\Apple.Services.ShoppingCartAPI.csproj" />
   </ItemGroup>
 
 </Project>
