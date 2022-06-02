@@ -30,6 +30,7 @@ namespace Apple.Web.Services
                 if (apiRequest.Data != null)
                 {
                     message.Content = new StringContent(JsonConvert.SerializeObject(apiRequest.Data), Encoding.UTF8, "application/json");
+                    //message.Content = JsonConvert.SerializeObject(apiRequest.Data).ToString();
                 }
 
 

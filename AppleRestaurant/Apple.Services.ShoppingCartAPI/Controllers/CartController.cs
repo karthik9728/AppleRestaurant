@@ -1,6 +1,7 @@
 ﻿using Apple.Services.ShoppingCartAPI.DTO;
 using Apple.Services.ShoppingCartAPI.DTO.Response;
 using Apple.Services.ShoppingCartAPI.Repository.IRepository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -38,6 +39,7 @@ namespace Apple.Services.ShoppingCartAPI.Controllers
         }
 
         [HttpPost("AddCart")]
+        [AllowAnonymous]
         public async Task<object> AddCart(CartDto cartDto)
         {
             try
