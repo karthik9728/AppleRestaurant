@@ -21,22 +21,41 @@ namespace Apple.Services.ShoppingCartAPI.Controllers
             this._response = new ResponseDto();
         }
 
+
+
         [HttpGet("GetCart/{userId}")]
-        public async Task<object> GetCart(string usedId)
+        public async Task<object> GetCart(string userId)
         {
             try
             {
-                CartDto cartDto = await _cartRepository.GetCartByUserId(usedId);
+                CartDto cartDto = await _cartRepository.GetCartByUserId(userId);
                 _response.Result = cartDto;
             }
             catch (Exception ex)
             {
-
                 _response.IsSuccess = false;
-                _response.ErrorMessage = new List<string> { ex.ToString() };
+                _response.ErrorMessage = new List<string>() { ex.ToString() };
             }
             return _response;
         }
+
+
+        //[HttpGet("GetCart/{userId}")]
+        //public async Task<object> GetCart(string usedId)
+        //{
+        //    try
+        //    {
+        //        CartDto cartDto = await _cartRepository.GetCartByUserId(usedId);
+        //        _response.Result = cartDto;
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //        _response.IsSuccess = false;
+        //        _response.ErrorMessage = new List<string> { ex.ToString() };
+        //    }
+        //    return _response;
+        //}
 
         [HttpPost("AddCart")]
         [AllowAnonymous]

@@ -87,12 +87,42 @@ namespace Apple.Services.ShoppingCartAPI.Repository
 
         public async Task<CartDto> GetCartByUserId(string userId)
         {
-            throw new NotImplementedException();
+            Cart cart = new()
+            {
+                CardHeader = await _db.CartHeaders.FirstOrDefaultAsync(u => u.userId == userId)
+            };
+
+            cart.CardDetails = _db.CartDetails
+                .Where(u => u.CardHeaderId == cart.CardHeader.CardHeaderId).Include(u => u.Product);
+
+            return _mapper.Map<CartDto>(cart);
         }
 
         public async Task<bool> RemoveFromCart(int cartDetailsId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                CardDetails cartDetails = await _db.CartDetails
+                    .FirstOrDefaultAsync(u => u.CardDeatilsId == cartDetailsId);
+
+                int totalCountOfCartItems = _db.CartDetails
+                    .Where(u => u.CardHeaderId == cartDetails.CardHeaderId).Count();
+
+                _db.CartDetails.Remove(cartDetails);
+                if (totalCountOfCartItems == 1)
+                {
+                    var cartHeaderToRemove = await _db.CartHeaders
+                        .FirstOrDefaultAsync(u => u.CardHeaderId == cartDetails.CardHeaderId);
+
+                    _db.CartHeaders.Remove(cartHeaderToRemove);
+                }
+                await _db.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
         }
     }
 }
