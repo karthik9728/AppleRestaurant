@@ -1,5 +1,7 @@
 using Apple.Services.CouponAPI.Data;
 using Apple.Services.CouponAPI.Mapping;
+using Apple.Services.CouponAPI.Repository;
+using Apple.Services.CouponAPI.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -30,7 +32,7 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 #region Repository Services
 
-//builder.Services.AddScoped<ICartRepository, CartRepository>();
+builder.Services.AddScoped<ICouponRepository, CouponRepository>();
 
 #endregion
 
