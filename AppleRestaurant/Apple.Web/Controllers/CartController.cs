@@ -45,5 +45,18 @@ namespace Apple.Web.Controllers
             }
             return cartDto;
         }
+
+        public async Task<IActionResult> Remove(int cartDetailsId)
+        {
+            var userId = User.Claims.Where(u => u.Type == "sub")?.FirstOrDefault()?.Value;
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var responce = await _cartService.RemoveFromCartAsync<ResponseDto>(cartDetailsId, accessToken);
+
+            if (responce != null && responce.IsSuccess)
+            {
+                return RedirectToAction(nameof(CartIndex));
+            }
+            return View();
+        }
     }
 }
