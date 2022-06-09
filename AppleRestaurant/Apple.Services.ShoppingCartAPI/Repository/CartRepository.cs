@@ -18,11 +18,28 @@ namespace Apple.Services.ShoppingCartAPI.Repository
             _mapper = mapper;
         }
 
-
+        public async Task<bool> ApplyCoupon(string userId, string couponCode)
+        {
+            var cartFromDb = await _db.CartHeaders.FirstOrDefaultAsync(u => u.userId == userId);
+            cartFromDb.CouponCode = couponCode;
+            _db.CartHeaders.Update(cartFromDb);
+            await _db.SaveChangesAsync();
+            return true;
+        }
 
         public async Task<bool> ClearCart(string userId)
         {
-            throw new NotImplementedException();
+            var cartHeaderFromDb = await _db.CartHeaders.FirstOrDefaultAsync(u => u.userId == userId);
+            if (cartHeaderFromDb != null)
+            {
+                _db.CartDetails
+                    .RemoveRange(_db.CartDetails.Where(u => u.CardHeaderId == cartHeaderFromDb.CardHeaderId));
+                _db.CartHeaders.Remove(cartHeaderFromDb);
+                await _db.SaveChangesAsync();
+                return true;
+
+            }
+            return false;
         }
 
         public async Task<CartDto> CreateUpdateCart(CartDto cartDto)
@@ -96,6 +113,15 @@ namespace Apple.Services.ShoppingCartAPI.Repository
                 .Where(u => u.CardHeaderId == cart.CardHeader.CardHeaderId).Include(u => u.Product);
 
             return _mapper.Map<CartDto>(cart);
+        }
+
+        public async Task<bool> RemoveCoupon(string userId)
+        {
+            var cartFromDb = await _db.CartHeaders.FirstOrDefaultAsync(u => u.userId == userId);
+            cartFromDb.CouponCode = "";
+            _db.CartHeaders.Update(cartFromDb);
+            await _db.SaveChangesAsync();
+            return true;
         }
 
         public async Task<bool> RemoveFromCart(int cartDetailsId)

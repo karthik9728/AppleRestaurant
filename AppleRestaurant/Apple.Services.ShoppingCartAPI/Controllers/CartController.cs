@@ -9,7 +9,7 @@ namespace Apple.Services.ShoppingCartAPI.Controllers
 {
     [Route("api/cart")]
     [ApiController]
-    public class CartController : ControllerBase
+    public class CartController : Controller
     {
         private readonly ICartRepository _cartRepository;
 
@@ -38,24 +38,6 @@ namespace Apple.Services.ShoppingCartAPI.Controllers
             }
             return _response;
         }
-
-
-        //[HttpGet("GetCart/{userId}")]
-        //public async Task<object> GetCart(string usedId)
-        //{
-        //    try
-        //    {
-        //        CartDto cartDto = await _cartRepository.GetCartByUserId(usedId);
-        //        _response.Result = cartDto;
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        _response.IsSuccess = false;
-        //        _response.ErrorMessage = new List<string> { ex.ToString() };
-        //    }
-        //    return _response;
-        //}
 
         [HttpPost("AddCart")]
         [AllowAnonymous]
@@ -106,6 +88,40 @@ namespace Apple.Services.ShoppingCartAPI.Controllers
 
                 _response.IsSuccess = false;
                 _response.ErrorMessage = new List<string> { ex.ToString() };
+            }
+            return _response;
+        }
+
+
+        [HttpPost("ApplyCoupon")]
+        public async Task<object> ApplyCoupon([FromBody] CartDto cartDto)
+        {
+            try
+            {
+                bool isSuccess = await _cartRepository.ApplyCoupon(cartDto.CardHeader.userId,
+                    cartDto.CardHeader.CouponCode);
+                _response.Result = isSuccess;
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.ErrorMessage = new List<string>() { ex.ToString() };
+            }
+            return _response;
+        }
+
+        [HttpPost("RemoveCoupon")]
+        public async Task<object> RemoveCoupon([FromBody] string userId)
+        {
+            try
+            {
+                bool isSuccess = await _cartRepository.RemoveCoupon(userId);
+                _response.Result = isSuccess;
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.ErrorMessage = new List<string>() { ex.ToString() };
             }
             return _response;
         }

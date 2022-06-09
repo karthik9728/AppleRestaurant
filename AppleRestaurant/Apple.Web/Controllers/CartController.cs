@@ -22,6 +22,37 @@ namespace Apple.Web.Controllers
             return View(await LoadCartDtoBasedOnLoggedInUser());
         }
 
+        [HttpPost]
+        [ActionName("ApplyCoupon")]
+        public async Task<IActionResult> ApplyCoupon(CartDto cartDto)
+        {
+            var userId = User.Claims.Where(u => u.Type == "sub")?.FirstOrDefault()?.Value;
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var response = await _cartService.ApplyCoupon<ResponseDto>(cartDto, accessToken);
+
+            if (response != null && response.IsSuccess)
+            {
+                return RedirectToAction(nameof(CartIndex));
+            }
+            return View();
+        }
+
+        [HttpPost]
+        [ActionName("RemoveCoupon")]
+        public async Task<IActionResult> RemoveCoupon(CartDto cartDto)
+        {
+            var userId = User.Claims.Where(u => u.Type == "sub")?.FirstOrDefault()?.Value;
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var response = await _cartService.RemoveCoupon<ResponseDto>(cartDto.CardHeader.userId, accessToken);
+
+            if (response != null && response.IsSuccess)
+            {
+                return RedirectToAction(nameof(CartIndex));
+            }
+            return View();
+        }
+
+
         private async Task<CartDto> LoadCartDtoBasedOnLoggedInUser()
         {
             //var userId = User.Claims.Where(x => x.Type == "sub")?.FirstOrDefault().Value;
@@ -58,5 +89,6 @@ namespace Apple.Web.Controllers
             }
             return View();
         }
+
     }
 }
